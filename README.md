@@ -11,12 +11,19 @@ This system is a technical challenge, showcasing backend and frontend developmen
 # 📃 Key Functionalities
 
 -Create Health Programs (e.g., TB, Malaria, HIV)
+
 -Register and manage Client profiles
+
 -Enroll Clients into one or more Programs with status tracking (Active, Completed, Dropped)
+
 -Search and View Client Profiles with enrolled Programs
+
 -REST API exposure for client data retrieval
+
 -Secure Authentication and Authorization
+
 -Responsive Frontend using HTML templates and Bootstrap 5
+
 -CORS support for API consumption
 
 health_system/
