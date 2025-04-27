@@ -94,7 +94,7 @@
         <div class="row g-0">
             {% if user.is_authenticated %}
                 <!-- Sidebar for authenticated users -->
-                <div class="col-lg-2 sidebar">
+                <div class="col-12 col-lg-2 sidebar">
                     <div class="list-group mt-3">
                         <a href="{% url 'client_list' %}" class="list-group-item list-group-item-action">Clients List</a>
                         <a href="{% url 'client_create' %}" class="list-group-item list-group-item-action">Register New Client</a>
@@ -102,10 +102,10 @@
                         <a href="{% url 'program_create' %}" class="list-group-item list-group-item-action">Create Health Program</a>
                     </div>
                 </div>
-                <div class="col-lg-10 content">
+                <div class="col-12 col-lg-10 content">
             {% else %}
                 <!-- Full width content for non-authenticated users -->
-                <div class="col-12 content">
+                <div class="col-12 col-lg-10 content">
             {% endif %}
                     <!-- Messages section -->
                     {% if messages %}
