@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Health Information System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3>{{ title }}</h3>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="{{ form.name.id_for_label }}" class="form-label">Program Name</label>
+                {{ form.name.errors }}
+                <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" 
+                       class="form-control {% if form.name.errors %}is-invalid{% endif %}" 
+                       value="{{ form.name.value|default:'' }}" required>
+                <div class="form-text">Enter a unique name for the health program</div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+                {{ form.category.errors }}
+                <input type="text" name="{{ form.category.name }}" id="{{ form.category.id_for_label }}" 
+                       class="form-control {% if form.category.errors %}is-invalid{% endif %}" 
+                       value="{{ form.category.value|default:'' }}" required>
+                <div class="form-text">Example: TB, Malaria, HIV, etc.</div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                {{ form.description.errors }}
+                <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" 
+                       class="form-control {% if form.description.errors %}is-invalid{% endif %}" 
+                       rows="4" required>{{ form.description.value|default:'' }}</textarea>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.duration.id_for_label }}" class="form-label">Duration (days)</label>
+                    {{ form.duration.errors }}
+                    <input type="number" name="{{ form.duration.name }}" id="{{ form.duration.id_for_label }}" 
+                           class="form-control {% if form.duration.errors %}is-invalid{% endif %}" 
+                           value="{{ form.duration.value|default:30 }}" min="1">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.active.id_for_label }}" class="form-label">Status</label>
+                    <div class="form-check form-switch mt-2">
+                        <input class="form-check-input" type="checkbox" name="{{ form.active.name }}" 
+                               id="{{ form.active.id_for_label }}" {% if form.active.value %}checked{% endif %}>
+                        <label class="form-check-label" for="{{ form.active.id_for_label }}">Active</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">Save Program</button>
+                <a href="{% url 'program_list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
