@@ -27,21 +27,33 @@ This system is a technical challenge, showcasing backend and frontend developmen
 -CORS support for API consumption
 
 health_system/
-├── accounts/          # Django app for authentication (Login/Logout)
+
+├── accounts/ # Django app for authentication (Login/Logout)
+
 ├── clients/           # Django app for client registration and management
+
 ├── programs/          # Django app for health program management
+
 ├── templates/         # HTML templates for frontend rendering
+
 ├── health_system/     # Project settings, URLs, WSGI
+
 ├── manage.py          # Django management script
+
 ├── requirements.txt   # Python package requirements
 
 # 🧰 System Architecture
 
 Frontend: Django Templates + Bootstrap 5 (HTML/CSS)
+
 Backend: Django 4.2 + Django REST Framework
+
 Database: SQLite
+
 Environment Management: Python Decouple
+
 Authentication: Django SessionAuth
+
 Deployment Readiness: Configured for Render
 
 
