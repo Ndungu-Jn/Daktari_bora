@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Health Information System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3>{{ title }}</h3>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name</label>
+                    {{ form.first_name.errors }}
+                    <input type="text" name="{{ form.first_name.name }}" id="{{ form.first_name.id_for_label }}" 
+                           class="form-control {% if form.first_name.errors %}is-invalid{% endif %}" 
+                           value="{{ form.first_name.value|default:'' }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name</label>
+                    {{ form.last_name.errors }}
+                    <input type="text" name="{{ form.last_name.name }}" id="{{ form.last_name.id_for_label }}" 
+                           class="form-control {% if form.last_name.errors %}is-invalid{% endif %}" 
+                           value="{{ form.last_name.value|default:'' }}" required>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.date_of_birth.id_for_label }}" class="form-label">Date of Birth</label>
+                    {{ form.date_of_birth.errors }}
+                    <input type="date" name="{{ form.date_of_birth.name }}" id="{{ form.date_of_birth.id_for_label }}" 
+                           class="form-control {% if form.date_of_birth.errors %}is-invalid{% endif %}" 
+                           value="{{ form.date_of_birth.value|date:'Y-m-d'|default:'' }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.gender.id_for_label }}" class="form-label">Gender</label>
+                    {{ form.gender.errors }}
+                    <select name="{{ form.gender.name }}" id="{{ form.gender.id_for_label }}" 
+                            class="form-select {% if form.gender.errors %}is-invalid{% endif %}" required>
+                        <option value="" {% if not form.gender.value %}selected{% endif %}>Select gender</option>
+                        {% for choice in form.gender.field.choices %}
+                            <option value="{{ choice.0 }}" {% if form.gender.value == choice.0 %}selected{% endif %}>
+                                {{ choice.1 }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="{{ form.contact_number.id_for_label }}" class="form-label">Contact Number</label>
+                {{ form.contact_number.errors }}
+                <input type="text" name="{{ form.contact_number.name }}" id="{{ form.contact_number.id_for_label }}" 
+                       class="form-control {% if form.contact_number.errors %}is-invalid{% endif %}" 
+                       value="{{ form.contact_number.value|default:'' }}">
+            </div>
+            
+            <h5 class="mt-4 mb-3">Address Information</h5>
+            
+            <div class="mb-3">
+                <label for="{{ form.street_address.id_for_label }}" class="form-label">Street Address</label>
+                {{ form.street_address.errors }}
+                <input type="text" name="{{ form.street_address.name }}" id="{{ form.street_address.id_for_label }}" 
+                       class="form-control {% if form.street_address.errors %}is-invalid{% endif %}" 
+                       value="{{ form.street_address.value|default:'' }}">
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.city.id_for_label }}" class="form-label">City</label>
+                    {{ form.city.errors }}
+                    <input type="text" name="{{ form.city.name }}" id="{{ form.city.id_for_label }}" 
+                           class="form-control {% if form.city.errors %}is-invalid{% endif %}" 
+                           value="{{ form.city.value|default:'' }}">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.state.id_for_label }}" class="form-label">State/Province</label>
+                    {{ form.state.errors }}
+                    <input type="text" name="{{ form.state.name }}" id="{{ form.state.id_for_label }}" 
+                           class="form-control {% if form.state.errors %}is-invalid{% endif %}" 
+                           value="{{ form.state.value|default:'' }}">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="{{ form.zip_code.id_for_label }}" class="form-label">ZIP/Postal Code</label>
+                    {{ form.zip_code.errors }}
+                    <input type="text" name="{{ form.zip_code.name }}" id="{{ form.zip_code.id_for_label }}" 
+                           class="form-control {% if form.zip_code.errors %}is-invalid{% endif %}" 
+                           value="{{ form.zip_code.value|default:'' }}">
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">Save Client</button>
+                <a href="{% url 'client_list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

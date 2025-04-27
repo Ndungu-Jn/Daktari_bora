@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ client.first_name }} {{ client.last_name }} - Health Information System{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3>Client Profile: {{ client.first_name }} {{ client.last_name }}</h3>
+        <div>
+            <a href="{% url 'client_update' client.id %}" class="btn btn-warning">Edit Client</a>
+            <a href="{% url 'enroll_client' client.id %}" class="btn btn-primary">Enroll in Program</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Personal Information</h5>
+                <table class="table">
+                    <tr>
+                        <th>Full Name</th>
+                        <td>{{ client.first_name }} {{ client.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date of Birth</th>
+                        <td>{{ client.date_of_birth }}</td>
+                    </tr>
+                    <tr>
+                        <th>Gender</th>
+                        <td>{{ client.get_gender_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>Contact Number</th>
+                        <td>{{ client.contact_number|default:"Not provided" }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h5>Address Information</h5>
+                <p>{{ client.get_address }}</p>
+                <h5>Registration Information</h5>
+                <table class="table">
+                    <tr>
+                        <th>Registered By</th>
+                        <td>{{ client.created_by.username|default:"Unknown" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Registration Date</th>
+                        <td>{{ client.created_at }}</td>
+                    </tr>
+                    <tr>
+                        <th>Last Updated</th>
+                        <td>{{ client.updated_at }}</td>
+                    </tr>     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h4>Enrolled Programs</h4>
+        </div>
+        <div class="card-body">
+            {% if client_programs %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Program Name</th>
+                            <th>Category</th>
+                            <th>Enrollment Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cp in client_programs %}
+                        <tr>
+                            <td>{{ cp.program.name }}</td>
+                            <td>{{ cp.program.category }}</td>
+                            <td>{{ cp.enrollment_date }}</td>
+                            <td>
+                                {% if cp.status == 'active' %}
+                                    <span class="badge bg-success">Active</span>
+                                {% elif cp.status == 'completed' %}
+                                    <span class="badge bg-primary">Completed</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Discontinued</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-warning">Update Status</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                This client is not enrolled in any health programs yet.
+                <a href="{% url 'enroll_client' client.id %}" class="btn btn-sm btn-primary ms-2">Enroll in Program</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endblock %}
