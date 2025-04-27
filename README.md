@@ -1,6 +1,6 @@
 # Daktari  Bora — Health Information Management Platform
 
-## LIVE LINK TO WEBSITE -- https://daktari-bora-wv0m.onrender.com
+## LIVE LINK TO WEB APPLICATION -- https://daktari-bora-wv0m.onrender.com
 
 
 ![Daktari](https://github.com/user-attachments/assets/a64719f5-049e-4026-9775-0ef81044c304)
