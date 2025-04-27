@@ -1,5 +1,4 @@
 {% load django_bootstrap5 %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,19 +7,56 @@
     <title>{% block title %} Daktari Bora {% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .sidebar {
-            min-height: calc(100vh - 56px);
-            background-color: #f8f9fa;
+        /* Responsive sidebar styles */
+        @media (min-width: 992px) {
+            .sidebar {
+                min-height: calc(100vh - 56px);
+                position: sticky;
+                top: 56px;
+                height: calc(100vh - 56px);
+                overflow-y: auto;
+                z-index: 1000;
+            }
+            .content {
+                padding: 20px;
+            }
         }
-        .content {
-            padding: 20px;
+        
+        /* Mobile sidebar styles */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                position: static;
+                background-color: #f8f9fa;
+                padding: 15px;
+            }
+            .sidebar .list-group {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .sidebar .list-group-item {
+                flex: 1 0 45%;
+                text-align: center;
+                margin-bottom: 8px;
+            }
+            .content {
+                padding: 15px;
+            }
+        }
+        
+        /* General styles */
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .content-wrapper {
+            margin-bottom: 30px;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand " href="{% url 'client_list' %}">Daktari Bora</a>
+            <a class="navbar-brand" href="{% url 'client_list' %}">Daktari Bora</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -35,54 +71,58 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     {% if user.is_authenticated %}
-                        <li class="nav-item">
+                        <li class="nav-item d-none d-sm-block">
                             <span class="nav-link">Welcome, {{ user.username }}</span>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'logout' %}">Logout</a>
                         </li>
                     {% else %}
-                        <li class="nav-item">
-                            <a class="btn btn-primary rounded-pill me-2" href="{% url 'login' %}">Login</a>
+                        <li class="nav-item me-2">
+                            <a class="btn btn-light btn-sm" href="{% url 'login' %}">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-primary rounded-pill" href="{% url 'register' %}">Register</a>
-                        </li>   
+                            <a class="btn btn-light btn-sm" href="{% url 'register' %}">Register</a>
+                        </li>  
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
-
-    <div class="container-fluid">
-        <div class="row">
+    
+    <div class="container-fluid content-wrapper">
+        <div class="row g-0">
             {% if user.is_authenticated %}
-            <div class="col-md-2 sidebar">
-                <div class="list-group mt-3">
-                    <a href="{% url 'client_list' %}" class="list-group-item list-group-item-action">Clients List</a>
-                    <a href="{% url 'client_create' %}" class="list-group-item list-group-item-action">Register New Client</a>
-                    <a href="{% url 'program_list' %}" class="list-group-item list-group-item-action">Programs List</a>
-                    <a href="{% url 'program_create' %}" class="list-group-item list-group-item-action">Create Health Program</a>
-                </div>
-            </div>
-            <div class="col-md-10 content">
-            {% else %}
-            <div class="col-md-12 content">
-            {% endif %}
-                {% if messages %}
-                    {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <!-- Sidebar for authenticated users -->
+                <div class="col-lg-2 sidebar">
+                    <div class="list-group mt-3">
+                        <a href="{% url 'client_list' %}" class="list-group-item list-group-item-action">Clients List</a>
+                        <a href="{% url 'client_create' %}" class="list-group-item list-group-item-action">Register New Client</a>
+                        <a href="{% url 'program_list' %}" class="list-group-item list-group-item-action">Programs List</a>
+                        <a href="{% url 'program_create' %}" class="list-group-item list-group-item-action">Create Health Program</a>
                     </div>
-                    {% endfor %}
-                {% endif %}
-                
-                {% block content %}{% endblock %}
-            </div>
+                </div>
+                <div class="col-lg-10 content">
+            {% else %}
+                <!-- Full width content for non-authenticated users -->
+                <div class="col-12 content">
+            {% endif %}
+                    <!-- Messages section -->
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                   
+                    <!-- Page content -->
+                    {% block content %}{% endblock %}
+                </div>
         </div>
     </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     {% block scripts %}{% endblock %}
 </body>
