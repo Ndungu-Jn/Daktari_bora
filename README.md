@@ -1,10 +1,21 @@
 # Daktari  Bora — Health Information Management Platform
 
+## Prototype Demonstration
+
+
+https://github.com/user-attachments/assets/2d6300b4-1c02-4cdf-b71f-4537d836adbb
+
+
+
 ---
 
 # 📊 Presentation
 
 You can view the project presentation here: https://github.com/Ndungu-Jn/Daktari_bora/blob/main/Daktari%20Bora.pptx
+
+
+![Screenshot 2025-04-27 204847](https://github.com/user-attachments/assets/4da7bcda-a17d-4f52-8592-5fb8b0b01ca1)
+
 
 ---
 
